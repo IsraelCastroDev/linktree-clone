@@ -1,5 +1,5 @@
 import ErrorMessage from "@/components/ui/ErrorMessage";
-import { api } from "@/config/axios";
+import api from "@/config/axios";
 import { LoginForm } from "@/types";
 import { isAxiosError } from "axios";
 import { CheckCircle, CircleAlertIcon } from "lucide-react";
