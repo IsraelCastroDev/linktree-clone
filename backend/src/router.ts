@@ -1,6 +1,11 @@
 import { Router } from "express";
 import { body } from "express-validator";
-import { getUser, login, registerUser } from "./handlers/auth-handlers";
+import {
+  getUser,
+  login,
+  registerUser,
+  updateProfile,
+} from "./handlers/auth-handlers";
 import { validateErrors } from "./middlewares/validateErrors";
 import { authenticate } from "./middlewares/authenticate";
 
@@ -35,5 +40,14 @@ router.post(
 );
 
 router.get("/user", authenticate, getUser);
+
+router.patch(
+  "/user",
+  authenticate,
+  body("handle").notEmpty().withMessage("El handle es requerido"),
+  body("description").notEmpty().withMessage("La descripción es requerido"),
+  validateErrors,
+  updateProfile
+);
 
 export default router;
