@@ -77,3 +77,34 @@ export async function getUser(req: Request, res: Response) {
   const user = req.user;
   res.json(user);
 }
+
+export async function updateProfile(req: Request, res: Response) {
+  try {
+    const { description } = req.body;
+
+    const slug = (await import("slug")).default;
+    const handle = slug(req.body.handle, "");
+
+    const handleExists = await User.findOne({ handle });
+
+    if (handleExists && handleExists.email !== req.user?.email) {
+      const error = new Error("El nombre de usuario ya existe");
+      res.status(409).json({ error: error.message });
+      return;
+    }
+
+    if (!req.user) {
+      res.status(404).json({ error: "Usuario no encontrado" });
+      return;
+    }
+
+    req.user.handle = handle;
+    req.user.description = description;
+    req.user.save();
+
+    res.status(200).json({ message: "Perfil actualizado correctamente" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Ocurrió un error inesperado" });
+  }
+}
