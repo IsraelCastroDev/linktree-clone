@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import User from "../models/User";
-import { hashPassword } from "../utils/auth";
+import { checkPassword, hashPassword } from "../utils/auth";
 
 export async function registerUser(req: Request, res: Response) {
   try {
@@ -34,6 +34,36 @@ export async function registerUser(req: Request, res: Response) {
     user.save();
 
     res.status(201).json({ message: "Cuenta creada" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Ocurrió un error inesperado" });
+  }
+}
+
+export async function login(req: Request, res: Response) {
+  try {
+    const { email, password } = req.body;
+
+    const userExists = await User.findOne({ email });
+
+    if (!userExists) {
+      const error = new Error("El usuario no existe");
+      res.status(404).json({ error: error.message });
+      return;
+    }
+
+    const passwordIsCorrect = await checkPassword(
+      password,
+      userExists.password
+    );
+
+    if (!passwordIsCorrect) {
+      const error = new Error("Contraseña incorrecta");
+      res.status(401).json({ error: error.message });
+      return;
+    }
+
+    res.status(200).json({ message: "Sesión iniciada" });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Ocurrió un error inesperado" });
