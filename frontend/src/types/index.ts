@@ -10,3 +10,10 @@ export const UserSchema = z.object({
 
 export type RegisterForm = z.infer<typeof UserSchema>;
 export type LoginForm = Pick<RegisterForm, "password" | "email">;
+
+export type User = Pick<RegisterForm, "email" | "name" | "handle"> & {
+  _id: string;
+  description?: string;
+};
+
+export type ProfileForm = Pick<User, "description" | "handle">;
