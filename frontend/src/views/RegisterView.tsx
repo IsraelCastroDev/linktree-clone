@@ -21,6 +21,7 @@ export default function RegisterView() {
     formState: { errors },
     handleSubmit,
     watch,
+    reset,
   } = useForm<RegisterForm>({
     defaultValues: initialValues,
   });
@@ -35,6 +36,8 @@ export default function RegisterView() {
         handle: formData.handle,
         password: formData.password,
       });
+
+      reset();
 
       toast(data.message, {
         icon: <CheckCircle className="h-5 w-5" />,
