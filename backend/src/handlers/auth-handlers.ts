@@ -72,3 +72,8 @@ export async function login(req: Request, res: Response) {
     res.status(500).json({ error: "Ocurrió un error inesperado" });
   }
 }
+
+export async function getUser(req: Request, res: Response) {
+  const user = req.user;
+  res.json(user);
+}
