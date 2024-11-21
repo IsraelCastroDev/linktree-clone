@@ -9,3 +9,4 @@ export const UserSchema = z.object({
 });
 
 export type RegisterForm = z.infer<typeof UserSchema>;
+export type LoginForm = Pick<RegisterForm, "password" | "email">;
