@@ -17,11 +17,13 @@ function LoginView() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginForm>({ defaultValues: initialValues });
 
   const handleLogin = async (formData: LoginForm) => {
     try {
       const { data } = await api.post("/auth/login", formData);
+      reset();
       toast(data.message, { icon: <CheckCircle className="h-5 w-5" /> });
     } catch (error) {
       if (isAxiosError(error) && error.response) {
