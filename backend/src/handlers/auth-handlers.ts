@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/User";
 import { checkPassword, hashPassword } from "../utils/auth";
+import { generateJWT } from "../utils/jwt";
 
 export async function registerUser(req: Request, res: Response) {
   try {
@@ -63,7 +64,9 @@ export async function login(req: Request, res: Response) {
       return;
     }
 
-    res.status(200).json({ message: "Sesión iniciada" });
+    const tokenJWT = generateJWT({ id: userExists._id });
+
+    res.status(200).json({ token: tokenJWT });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Ocurrió un error inesperado" });
