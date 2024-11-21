@@ -10,7 +10,7 @@ export async function registerUser(req: Request, res: Response) {
 
     if (userExists) {
       const error = new Error("El usuario ya existe");
-      res.status(401).json({ error: error.message });
+      res.status(409).json({ error: error.message });
       return;
     }
 
