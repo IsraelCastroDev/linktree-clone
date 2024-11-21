@@ -23,8 +23,9 @@ function LoginView() {
   const handleLogin = async (formData: LoginForm) => {
     try {
       const { data } = await api.post("/auth/login", formData);
+      localStorage.setItem("auth_token", data.token);
       reset();
-      toast(data.message, { icon: <CheckCircle className="h-5 w-5" /> });
+      toast("Sesión iniciada", { icon: <CheckCircle className="h-5 w-5" /> });
     } catch (error) {
       if (isAxiosError(error) && error.response) {
         toast(error.response.data.error, {
