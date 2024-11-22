@@ -1,5 +1,5 @@
 import { getUser } from "@/api/linktreeAPI";
-import Profile from "@/components/Profile";
+import LinkTree from "@/components/LinkTree";
 import Spinner from "@/components/ui/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate } from "react-router-dom";
@@ -19,5 +19,5 @@ export default function AppLayout() {
   if (isLoading) return <Spinner />;
   if (isError) return <Navigate to={"/auth/login"} />;
 
-  if (user) return <Profile user={user} />;
+  if (user) return <LinkTree user={user} />;
 }
