@@ -44,7 +44,23 @@ export default function Profile({ user }: ProfileProps) {
             <div className="flex-1 ">
               <Outlet />
             </div>
-            <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6"></div>
+            <div className="w-full md:w-96 bg-slate-800 px-5 py-10 space-y-6">
+              <p className="text-3xl text-center text-white font-semibold">
+                {user.handle}
+              </p>
+
+              {user.image && (
+                <img
+                  src={user.image}
+                  alt={`Imagen del usuario ${user.handle}`}
+                  className="mx-auto max-w-[250px]"
+                />
+              )}
+
+              <p className="text-center text-lg font-semibold text-white">
+                {user.description}
+              </p>
+            </div>
           </div>
         </main>
       </div>
