@@ -5,6 +5,7 @@ import {
   login,
   registerUser,
   updateProfile,
+  uploadImage,
 } from "./handlers/auth-handlers";
 import { validateErrors } from "./middlewares/validateErrors";
 import { authenticate } from "./middlewares/authenticate";
@@ -49,5 +50,7 @@ router.patch(
   validateErrors,
   updateProfile
 );
+
+router.post("/user/image", authenticate, uploadImage);
 
 export default router;
