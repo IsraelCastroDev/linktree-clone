@@ -14,6 +14,16 @@ export type LoginForm = Pick<RegisterForm, "password" | "email">;
 export type User = Pick<RegisterForm, "email" | "name" | "handle"> & {
   _id: string;
   description?: string;
+  image: string;
 };
+
+export type SocialNetwork = {
+  id: number;
+  name: string;
+  url: string;
+  enabled: boolean;
+};
+
+export type SocialLink = Pick<SocialNetwork, "name" | "url" | "enabled">;
 
 export type ProfileForm = Pick<User, "description" | "handle">;
