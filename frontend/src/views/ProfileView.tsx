@@ -40,9 +40,16 @@ export default function ProfileView() {
     onError: (error) => {
       toast(error.message, { icon: <CircleAlertIcon className="h-5 w-5" /> });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast("Imagen subida correctamente", {
         icon: <CheckCircle className="h-5 w-5" />,
+      });
+      // carga optimista
+      queryClient.setQueryData(["get-user"], (prevData: User) => {
+        return {
+          ...prevData,
+          image: data.image,
+        };
       });
     },
   });
