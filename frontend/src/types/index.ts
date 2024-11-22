@@ -15,6 +15,7 @@ export type User = Pick<RegisterForm, "email" | "name" | "handle"> & {
   _id: string;
   description?: string;
   image: string;
+  links: string;
 };
 
 export type SocialNetwork = {
