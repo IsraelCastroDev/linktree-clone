@@ -83,7 +83,7 @@ export async function getUser(req: Request, res: Response) {
 
 export async function updateProfile(req: Request, res: Response) {
   try {
-    const { description } = req.body;
+    const { description, links } = req.body;
 
     const slug = (await import("slug")).default;
     const handle = slug(req.body.handle, "");
@@ -103,6 +103,7 @@ export async function updateProfile(req: Request, res: Response) {
 
     req.user.handle = handle;
     req.user.description = description;
+    req.user.links = links;
     req.user.save();
 
     res.status(200).json({ message: "Perfil actualizado correctamente" });
