@@ -98,7 +98,11 @@ export default function LinkTreeView() {
             id: 0,
             enabled: false,
           };
-        } else if (link.id > indexToUpdate) {
+        } else if (
+          link.id > indexToUpdate &&
+          indexToUpdate !== 0 &&
+          link.id === 1
+        ) {
           return {
             ...link,
             id: link.id - 1,
@@ -125,7 +129,7 @@ export default function LinkTreeView() {
         />
       ))}
       <button
-        onClick={() => mutate(user)}
+        onClick={() => mutate(queryClient.getQueryData(["get-user"])!)}
         className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-800 font-bold relative disabled:opacity-45 disabled:cursor-default"
         disabled={isPending}
       >
