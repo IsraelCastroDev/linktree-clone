@@ -5,7 +5,8 @@ export type UserModelType = Document & {
   email: string;
   handle: string;
   password: string;
-  description?: string;
+  description: string;
+  image: string;
 };
 
 const UserSchema = new Schema({
@@ -14,6 +15,7 @@ const UserSchema = new Schema({
   password: { type: String, required: true, trim: true },
   handle: { type: String, required: true, trim: true, unique: true },
   description: { type: String, default: "", trim: true },
+  image: { type: String, default: "" },
 });
 
 const User = mongoose.model<UserModelType>("User", UserSchema);
