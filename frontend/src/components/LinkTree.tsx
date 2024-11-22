@@ -2,12 +2,24 @@ import { Link } from "react-router-dom";
 import NavigationTabs from "./NavigationTabs";
 import { Outlet } from "react-router-dom";
 import { User } from "@/types";
+import { useEffect, useState } from "react";
+import { SocialNetwork } from "@/types";
 
 interface ProfileProps {
   user: User;
 }
 
-export default function Profile({ user }: ProfileProps) {
+export default function LinkTree({ user }: ProfileProps) {
+  const [enabledLinks, setEnabledLinks] = useState<SocialNetwork[]>(
+    JSON.parse(user.links).filter((link: SocialNetwork) => link.enabled)
+  );
+
+  useEffect(() => {
+    setEnabledLinks(
+      JSON.parse(user.links).filter((link: SocialNetwork) => link.enabled)
+    );
+  }, [user.links]);
+
   return (
     <>
       <header className="bg-slate-800 py-5">
@@ -60,6 +72,25 @@ export default function Profile({ user }: ProfileProps) {
               <p className="text-center text-lg font-semibold text-white">
                 {user.description}
               </p>
+
+              <ul className="mt-10 flex flex-col gap-5">
+                {enabledLinks.map((link) => (
+                  <li
+                    key={link.name}
+                    className="bg-white px-5 py-2 gap-4 rounded-lg flex items-center"
+                  >
+                    <div
+                      className="w-12 h-12 bg-cover"
+                      style={{
+                        backgroundImage: `url(/social/icon_${link.name}.svg)`,
+                      }}
+                    ></div>
+                    <p className="capitalize">
+                      Visita mi <span className="font-bold">{link.name}</span>
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </main>
