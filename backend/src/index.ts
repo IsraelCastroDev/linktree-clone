@@ -1,6 +1,6 @@
+import "dotenv/config";
 import server from "./server";
 import { connectDB } from "./config/db";
-import "dotenv/config";
 
 connectDB();
 
