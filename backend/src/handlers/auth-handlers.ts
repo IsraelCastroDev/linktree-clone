@@ -1,6 +1,9 @@
 import { Request, Response } from "express";
+import formidable from "formidable";
 import User from "../models/User";
 import { checkPassword, hashPassword } from "../utils/auth";
+import cloudinary from "../config/cloudinary";
+import { v4 as uuid } from "uuid";
 import { generateJWT } from "../utils/jwt";
 
 export async function registerUser(req: Request, res: Response) {
@@ -103,6 +106,40 @@ export async function updateProfile(req: Request, res: Response) {
     req.user.save();
 
     res.status(200).json({ message: "Perfil actualizado correctamente" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Ocurrió un error inesperado" });
+  }
+}
+
+export async function uploadImage(req: Request, res: Response) {
+  const form = formidable({ multiples: false });
+
+  try {
+    form.parse(req, (error, fields, files) => {
+      if (files.file) {
+        cloudinary.uploader.upload(
+          files.file[0].filepath,
+          { public_id: uuid() },
+          async (error, result) => {
+            if (error) {
+              res
+                .status(500)
+                .json({ error: "Hubo un error al subir la imagen" });
+              return;
+            }
+
+            if (result) {
+              if (req.user) {
+                req.user.image = result.secure_url;
+                await req.user.save();
+                res.json({ image: result.secure_url });
+              }
+            }
+          }
+        );
+      }
+    });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: "Ocurrió un error inesperado" });
