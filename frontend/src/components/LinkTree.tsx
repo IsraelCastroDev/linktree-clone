@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
-import NavigationTabs from "./NavigationTabs";
 import { Outlet } from "react-router-dom";
+import NavigationTabs from "./NavigationTabs";
+import { DndContext, DragEndEvent, closestCenter } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+  arrayMove,
+} from "@dnd-kit/sortable";
 import { User } from "@/types";
 import { useEffect, useState } from "react";
 import { SocialNetwork } from "@/types";
+import Links from "./Links";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface ProfileProps {
   user: User;
@@ -19,6 +27,34 @@ export default function LinkTree({ user }: ProfileProps) {
       JSON.parse(user.links).filter((link: SocialNetwork) => link.enabled)
     );
   }, [user.links]);
+
+  // drag and drop
+  const queryClient = useQueryClient();
+
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e;
+
+    if (over && over.id) {
+      const prevIndex = enabledLinks.findIndex((link) => link.id === active.id);
+      const newIndex = enabledLinks.findIndex((link) => link.id === over.id);
+      const order = arrayMove(enabledLinks, prevIndex, newIndex);
+
+      setEnabledLinks(order);
+
+      const disabledLinks: SocialNetwork[] = JSON.parse(user.links).filter(
+        (link: SocialNetwork) => !link.enabled
+      );
+
+      const links = [...order, ...disabledLinks];
+
+      queryClient.setQueryData(["get-user"], (prevData: User) => {
+        return {
+          ...prevData,
+          links: JSON.stringify(links),
+        };
+      });
+    }
+  };
 
   return (
     <>
@@ -73,24 +109,21 @@ export default function LinkTree({ user }: ProfileProps) {
                 {user.description}
               </p>
 
-              <ul className="mt-10 flex flex-col gap-5">
-                {enabledLinks.map((link) => (
-                  <li
-                    key={link.name}
-                    className="bg-white px-5 py-2 gap-4 rounded-lg flex items-center"
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <ul className="mt-10 flex flex-col gap-5">
+                  <SortableContext
+                    items={enabledLinks}
+                    strategy={verticalListSortingStrategy}
                   >
-                    <div
-                      className="w-12 h-12 bg-cover"
-                      style={{
-                        backgroundImage: `url(/social/icon_${link.name}.svg)`,
-                      }}
-                    ></div>
-                    <p className="capitalize">
-                      Visita mi <span className="font-bold">{link.name}</span>
-                    </p>
-                  </li>
-                ))}
-              </ul>
+                    {enabledLinks.map((link) => (
+                      <Links key={link.name} link={link} />
+                    ))}
+                  </SortableContext>
+                </ul>
+              </DndContext>
             </div>
           </div>
         </main>
