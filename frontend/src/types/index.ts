@@ -28,3 +28,8 @@ export type SocialNetwork = {
 export type SocialLink = Pick<SocialNetwork, "name" | "url" | "enabled">;
 
 export type ProfileForm = Pick<User, "description" | "handle">;
+
+export type UserHandle = Pick<
+  User,
+  "description" | "handle" | "image" | "links" | "name"
+>;
