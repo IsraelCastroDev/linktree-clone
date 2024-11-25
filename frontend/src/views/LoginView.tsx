@@ -4,10 +4,12 @@ import { LoginForm } from "@/types";
 import { isAxiosError } from "axios";
 import { CheckCircle, CircleAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
 function LoginView() {
+  const navigate = useNavigate();
+
   const initialValues = {
     email: "",
     password: "",
@@ -24,6 +26,7 @@ function LoginView() {
     try {
       const { data } = await api.post("/auth/login", formData);
       localStorage.setItem("auth_token", data.token);
+      navigate("/admin");
       reset();
       toast("Sesión iniciada", { icon: <CheckCircle className="h-5 w-5" /> });
     } catch (error) {
