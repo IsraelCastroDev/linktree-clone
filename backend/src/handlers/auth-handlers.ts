@@ -146,3 +146,23 @@ export async function uploadImage(req: Request, res: Response) {
     res.status(500).json({ error: "Ocurrió un error inesperado" });
   }
 }
+
+export async function getUserByHandle(req: Request, res: Response) {
+  try {
+    const { handle } = req.params;
+
+    const user = await User.findOne({ handle }).select(
+      "-password -_id -__v -email"
+    );
+
+    if (!user) {
+      res.status(404).json({ error: "Usuario no econtrado" });
+      return;
+    }
+
+    res.send(user);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Ocurrió un error" });
+  }
+}
