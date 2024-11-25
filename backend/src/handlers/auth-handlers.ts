@@ -166,3 +166,21 @@ export async function getUserByHandle(req: Request, res: Response) {
     res.status(500).json({ error: "Ocurrió un error" });
   }
 }
+
+export async function searchByHandle(req: Request, res: Response) {
+  try {
+    const { handle } = req.body;
+
+    const userExists = await User.findOne({ handle });
+
+    if (userExists) {
+      res.status(409).json({ error: `${handle} ya esta en uso` });
+      return;
+    }
+
+    res.status(200).json({ message: `${handle} está disponible` });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Ocurrió un error" });
+  }
+}
