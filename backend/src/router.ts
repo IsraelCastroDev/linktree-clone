@@ -5,6 +5,7 @@ import {
   getUserByHandle,
   login,
   registerUser,
+  searchByHandle,
   updateProfile,
   uploadImage,
 } from "./handlers/auth-handlers";
@@ -47,7 +48,6 @@ router.patch(
   "/user",
   authenticate,
   body("handle").notEmpty().withMessage("El handle es requerido"),
-  body("description").notEmpty().withMessage("La descripción es requerido"),
   validateErrors,
   updateProfile
 );
@@ -55,5 +55,12 @@ router.patch(
 router.post("/user/image", authenticate, uploadImage);
 
 router.get("/:handle", getUserByHandle);
+
+router.post(
+  "/search",
+  body("handle").notEmpty().withMessage("El handle es obligatoria"),
+  validateErrors,
+  searchByHandle
+);
 
 export default router;
