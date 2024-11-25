@@ -80,7 +80,7 @@ export default function LinkTree({ user }: ProfileProps) {
           <div className="flex justify-end">
             <Link
               className="font-bold text-right text-slate-800 text-2xl"
-              to={""}
+              to={`/${user.handle}`}
               target="_blank"
               rel="noreferrer noopener"
             >
