@@ -1,4 +1,5 @@
 import { getUserByHandle } from "@/api/linktreeAPI";
+import HandleData from "@/components/HandleData";
 import Spinner from "@/components/ui/Spinner";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, useParams } from "react-router-dom";
@@ -20,5 +21,5 @@ export default function HandleView() {
   if (isLoading) return <Spinner color="white" />;
   if (error) return <Navigate to={"/404"} />;
 
-  return <div>HandleView</div>;
+  if (user) return <HandleData user={user} />;
 }
