@@ -4,16 +4,18 @@ import { RegisterForm } from "@/types";
 import { isAxiosError } from "axios";
 import { CheckCircle, CircleAlertIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "sonner";
 
 export default function RegisterView() {
+  const location = useLocation();
+
   const initialValues = {
     name: "",
     email: "",
     password: "",
     password_confirmation: "",
-    handle: "",
+    handle: location.state.handle ? location.state.handle : "",
   };
 
   const {
