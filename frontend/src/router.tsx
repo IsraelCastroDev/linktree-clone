@@ -8,6 +8,7 @@ import LinkTreeView from "./views/LinkTreeView";
 import ProfileView from "./views/ProfileView";
 import HandleView from "./views/HandleView";
 import NotFoundView from "./views/NotFoundView";
+import HomeView from "./views/HomeView";
 
 export default function Router() {
   return (
@@ -30,6 +31,8 @@ export default function Router() {
         <Route path="/404" element={<AuthLayout />}>
           <Route element={<NotFoundView />} index={true} />
         </Route>
+
+        <Route path="/" element={<HomeView />} />
       </Routes>
       <Toaster />
     </BrowserRouter>
