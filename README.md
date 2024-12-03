@@ -1,13 +1,20 @@
 # 🌐 Clon de Linktree (SuperTreeLink)
 
 Este proyecto es un clon de Linktree, desarrollado utilizando **Express** en el backend, **React** en el frontend y **MongoDB** como base de datos. Linktree permite a los usuarios agrupar múltiples enlaces en una sola página personalizada para compartir fácilmente.
+<img src="assets/linktree-clone-home.png" alt="Captura de pantalla" style="margin-top: 20px;">
 
 ## ✨ Características
 
-- **Página de usuario personalizada:** Los usuarios pueden crear su propia página con enlaces personalizados.
 - **Autenticación:** Inicio de sesión y registro para gestionar la página de enlaces.
-- **Administración de enlaces:** Los usuarios pueden agregar, editar y eliminar enlaces.
+  <img src="assets/linktree-clone-login.png" alt="Captura de pantalla" style="margin-top: 20px;">
+  <img src="assets/linktree-clone-register.png" alt="Captura de pantalla" style="margin-top: 20px;">
+- **Página de usuario personalizada:** Los usuarios pueden crear su propia página con enlaces personalizados.
+  <img src="assets/linktree-clone-links.png" alt="Captura de pantalla" style="margin-top: 20px;">
+  <img src="assets/linktree-clone-links-2.png" alt="Captura de pantalla">
+- **Administración de perfil:** Los usuarios pueden editar su información de su cuenta.
+  <img src="assets/linktree-clone-profile.png" alt="Captura de pantalla" style="margin-top: 20px;">
 - **Diseño responsivo:** La aplicación es completamente funcional en dispositivos móviles y de escritorio.
+  <img src="assets/linktree-clone-responsive.png" alt="Captura de pantalla" style="margin-top: 20px" >
 
 ## 🛠️ Tecnologías utilizadas
 
