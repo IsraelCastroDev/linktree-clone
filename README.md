@@ -78,7 +78,7 @@ cd tu_repositorio
 Una vez que ambos servidores estén en funcionamiento:
 
 - Frontend: `http://localhost:5173`
-- Backend: `http://localhost:5000` (o el puerto configurado)
+- Backend: `http://localhost:4000` (o el puerto configurado)
 
 ## 👨‍💻 Autor
 
