@@ -15,7 +15,7 @@ export default function RegisterView() {
     email: "",
     password: "",
     password_confirmation: "",
-    handle: location.state.handle ? location.state.handle : "",
+    handle: location?.state?.handle ? location.state.handle : "",
   };
 
   const {
